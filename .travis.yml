@@ -4,3 +4,5 @@ dart:
 - stable
 dart_task:
   - test: --platform vm
+script:
+  - dart run test/main.dart
