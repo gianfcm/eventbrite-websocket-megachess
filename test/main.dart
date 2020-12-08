@@ -86,8 +86,6 @@ testMoveQueen() {
             matrixStringBoard.toString().replaceAll(RegExp(r'[^\w\s]+'), ''));
     Queen queen = board.board[5][6];
     var moves = queen.getPossibleMoves();
-    print('Verifying moves length');
-    expect(moves.length,38);
     print('Verifying moves positions');
     for (var move in moves) {
       expect(
