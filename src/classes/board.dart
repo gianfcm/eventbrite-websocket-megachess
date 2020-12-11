@@ -2,6 +2,7 @@ import '../shared/types/piece_color.dart';
 import 'coordinate.dart';
 import 'move.dart';
 import 'dart:io';
+import 'pieces/empty_piece.dart';
 import 'pieces/piece.dart';
 
 class Board {
@@ -19,7 +20,7 @@ class Board {
     this.board = board;
   }
 
-  int evaluateBoard({PIECE_COLOR side, List<List<Piece>> board}) {
+  int evaluateBoard({PIECE_COLOR side}) {
     int whiteScore = 0;
     int blackScore = 0;
 
@@ -44,12 +45,14 @@ class Board {
       for (int x = 0; x <= 15; x++) {
         if (this.board[y][x].stringRep != ' ') {
           if (this.board[y][x].side == side) {
-            var possibleMoves = this.board[y][x].getPossibleMoves();
-            if (possibleMoves != null &&
-                possibleMoves.isNotEmpty &&
-                possibleMoves != 0 &&
-                possibleMoves.length != 0) {
-              moves.addAll(possibleMoves);
+            if (this.board[y][x].canMove()) {
+              var possibleMoves = this.board[y][x].getPossibleMoves();
+              if (possibleMoves != null &&
+                  possibleMoves.isNotEmpty &&
+                  possibleMoves != 0 &&
+                  possibleMoves.length != 0) {
+                moves.addAll(possibleMoves);
+              }
             }
           }
         }
@@ -59,7 +62,10 @@ class Board {
   }
 
   makeMove({Move move}) {
-    movePieceToPosition(pieceToMove: move.piece, position: move.newPosition);
+    this.board[move.previousPosition.row][move.previousPosition.col] =
+        EmptyPiece(board: this, position: move.previousPosition, side: null);
+    this.board[move.newPosition.row][move.newPosition.col] = move.piece;
+    move.piece.position = move.newPosition;
   }
 
   unMakeMove({Move move}) {
@@ -67,14 +73,11 @@ class Board {
       this.board[move.newPosition.row][move.newPosition.col] =
           move.pieceToCapture;
     }
-    movePieceToPosition(
-        pieceToMove: move.piece, position: move.previousPosition);
+    this.board[move.previousPosition.row][move.previousPosition.col] =
+        move.piece;
+    move.piece.position = move.previousPosition;
   }
 
-  movePieceToPosition({Piece pieceToMove, Coordinate position}) {
-    this.board[position.row][position.col] = pieceToMove;
-    pieceToMove.position = position;
-  }
 
   bool isValidPosition({Coordinate position}) {
     if (position.row >= 0 &&

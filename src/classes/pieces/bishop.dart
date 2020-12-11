@@ -3,9 +3,8 @@ import '../board.dart';
 import '../coordinate.dart';
 import '../move.dart';
 import 'piece.dart';
-import 'queen.dart';
 
-class Bishop extends Piece implements Queen {
+class Bishop extends Piece {
   int value = 40;
   int movesMade;
 
@@ -22,27 +21,36 @@ class Bishop extends Piece implements Queen {
   }
 
   @override
+  bool canMove() {
+    var positions = [
+      Coordinate(col: position.col + 1, row: position.row + 1),
+      Coordinate(col: position.col - 1, row: position.row - 1),
+      Coordinate(col: position.col + 1, row: position.row - 1),
+      Coordinate(col: position.col - 1, row: position.row + 1)
+    ];
+
+    var emptySpace = 0;
+    for (var sumPosition in positions) {
+      if (board.isValidPosition(position: sumPosition) &&
+          (board.pieceAtPosition(position: sumPosition) == null ||
+              board.pieceAtPosition(position: sumPosition)?.side != side)) {
+        emptySpace = emptySpace + 1;
+      }
+    }
+
+    if (emptySpace > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
-    moves.addAll(burstNorthWestMoves(piece: this));
-    moves.addAll(burstNorthEastMoves(piece: this));
-    moves.addAll(burstSouthWestMoves(piece: this));
-    moves.addAll(burstSouthEastMoves(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(northWestMoves(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(northEastMoves(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(southWestMoves(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(southEastMoves(piece: this));
     return moves;
   }

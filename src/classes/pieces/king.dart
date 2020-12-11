@@ -2,7 +2,9 @@ import '../../shared/types/piece_color.dart';
 import '../board.dart';
 import '../coordinate.dart';
 import '../move.dart';
+import 'bishop.dart';
 import 'piece.dart';
+import 'rook.dart';
 
 class King extends Piece {
   int value = 100;
@@ -20,24 +22,23 @@ class King extends Piece {
   }
 
   @override
+  bool canMove() {
+    Rook rook = Rook(board: this.board, position: position, side: this.side);
+    Bishop bishop =
+        Bishop(board: this.board, position: position, side: this.side);
+    if (bishop.canMove() || rook.canMove()) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
     moves.addAll(movesUp(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesDown(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesRight(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesLeft(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     return moves;
   }
 

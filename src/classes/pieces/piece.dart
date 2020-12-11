@@ -24,6 +24,10 @@ class Piece {
     return null;
   }
 
+  bool canMove() {
+    return true;
+  }
+
   Piece returnPieceByString({String stringPiece, int y, int x, Board board}) {
     switch (stringPiece) {
       case 'p':

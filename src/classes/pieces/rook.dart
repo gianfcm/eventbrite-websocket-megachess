@@ -3,9 +3,8 @@ import '../board.dart';
 import '../coordinate.dart';
 import '../move.dart';
 import 'piece.dart';
-import 'queen.dart';
 
-class Rook extends Piece implements Queen {
+class Rook extends Piece {
   int value = 60;
   int movesMade;
 
@@ -21,27 +20,36 @@ class Rook extends Piece implements Queen {
   }
 
   @override
+  bool canMove() {
+    var positions = [
+      Coordinate(col: position.col, row: position.row + 1),
+      Coordinate(col: position.col, row: position.row - 1),
+      Coordinate(col: position.col + 1, row: position.row),
+      Coordinate(col: position.col - 1, row: position.row),
+    ];
+
+    var emptySpace = 0;
+    for (var sumPosition in positions) {
+      if (board.isValidPosition(position: sumPosition) &&
+          (board.pieceAtPosition(position: sumPosition) == null ||
+              board.pieceAtPosition(position: sumPosition)?.side != side)) {
+        emptySpace = emptySpace + 1;
+      }
+    }
+
+    if (emptySpace > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
-    moves.addAll(burstMovesUp(piece: this));
-    moves.addAll(burstMovesDown(piece: this));
-    moves.addAll(burstMovesLeft(piece: this));
-    moves.addAll(burstMovesRight(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesUp(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesDown(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesRight(piece: this));
-    if (moves.isNotEmpty) {
-      return moves;
-    }
     moves.addAll(movesLeft(piece: this));
     return moves;
   }

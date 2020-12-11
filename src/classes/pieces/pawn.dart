@@ -21,6 +21,21 @@ class Pawn extends Piece {
   }
 
   @override
+  bool canMove() {
+    var sumPosition;
+    if (side == PIECE_COLOR.BLACK) {
+      sumPosition = Coordinate(col: position.col, row: position.row + 1);
+    } else if (side == PIECE_COLOR.WHITE) {
+      sumPosition = Coordinate(col: position.col, row: position.row - 1);
+    }
+    var piece = board.pieceAtPosition(position: sumPosition);
+    if (piece == null) {
+      return true;
+    }
+    return false;
+  }
+
+  @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
     moves.addAll(moveTwoUpMoves());
@@ -74,11 +89,12 @@ class Pawn extends Piece {
   diagonallyRightMoves() {
     List<Move> diagonallyRightMoves = [];
     var moveDiagonallyRight = this.side == PIECE_COLOR.BLACK
-        ? position.sum(coordinate: Coordinate(row: 1, col: -1))
+        ? position.sum(coordinate: Coordinate(row: 1, col: 1))
         : position.sum(coordinate: Coordinate(row: -1, col: 1));
 
     if (board.isValidPosition(position: moveDiagonallyRight) &&
-        board.pieceAtPosition(position: moveDiagonallyRight) != null &&
+        board.pieceAtPosition(position: moveDiagonallyRight)?.position?.row !=
+            null &&
         board.pieceAtPosition(position: moveDiagonallyRight)?.side !=
             this.side) {
       diagonallyRightMoves.add(Move(
@@ -93,11 +109,12 @@ class Pawn extends Piece {
   diagonallyLeftMoves() {
     List<Move> diagonallyLeftMoves = [];
     var moveDiagonallyLeft = this.side == PIECE_COLOR.BLACK
-        ? position.sum(coordinate: Coordinate(row: 1, col: 1))
+        ? position.sum(coordinate: Coordinate(row: 1, col: -1))
         : position.sum(coordinate: Coordinate(row: -1, col: -1));
 
     if (board.isValidPosition(position: moveDiagonallyLeft) &&
-        board.pieceAtPosition(position: moveDiagonallyLeft) != null &&
+        board.pieceAtPosition(position: moveDiagonallyLeft)?.position?.row !=
+            null &&
         board.pieceAtPosition(position: moveDiagonallyLeft)?.side !=
             this.side) {
       diagonallyLeftMoves.add(Move(

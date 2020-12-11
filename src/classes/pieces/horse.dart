@@ -21,6 +21,35 @@ class Horse extends Piece {
   }
 
   @override
+  bool canMove() {
+    var possibleHorseMoves = [
+      position.sum(coordinate: Coordinate(row: -2, col: 1)),
+      position.sum(coordinate: Coordinate(row: -2, col: -1)),
+      position.sum(coordinate: Coordinate(row: -1, col: 2)),
+      position.sum(coordinate: Coordinate(row: -1, col: -2)),
+      position.sum(coordinate: Coordinate(row: 1, col: -2)),
+      position.sum(coordinate: Coordinate(row: 2, col: -1)),
+      position.sum(coordinate: Coordinate(row: 2, col: 1)),
+      position.sum(coordinate: Coordinate(row: 1, col: 2)),
+    ];
+
+    var emptySpace = 0;
+    for (var sumPosition in possibleHorseMoves) {
+      if (board.isValidPosition(position: sumPosition) &&
+          (board.pieceAtPosition(position: sumPosition) == null ||
+              board.pieceAtPosition(position: sumPosition)?.side != side)) {
+        emptySpace = emptySpace + 1;
+      }
+    }
+
+    if (emptySpace > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  @override
   List<Move> getPossibleMoves() {
     return horseMoves();
   }

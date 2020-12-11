@@ -30,8 +30,7 @@ class ChessSocket {
   select_method({Map message}) {
     switch (message['event']) {
       case 'ask_challenge':
-                accept_challenge(board_id: message['data']['board_id']);
-        
+          accept_challenge(board_id: message['data']['board_id']);
         break;
       case 'your_turn':
         set_game(
