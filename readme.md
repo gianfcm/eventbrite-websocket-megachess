@@ -31,7 +31,7 @@ dart run bin/eventbrite-websocket-megachess.dart 123456789-987654321f
 
 ## Results
 
-When each game is over the result is saved on results.text on /bin/results.txt
+When each game is over the result is saved on results.txt on /bin/results.txt
 
 ## Test
 
