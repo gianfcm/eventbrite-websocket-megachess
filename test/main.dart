@@ -1,3 +1,4 @@
+import 'ai_test.dart';
 import 'bishop_test.dart';
 import 'board_test.dart';
 import 'horse_test.dart';
@@ -15,5 +16,5 @@ void main() {
   testRook(); 
   testBishop(); 
   testHorse(); 
-  //testAI();
+  testAI();
 }
