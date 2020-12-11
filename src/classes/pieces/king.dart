@@ -35,14 +35,18 @@ class King extends Piece {
   @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
-    moves.addAll(movesUp(piece: this));
-    moves.addAll(movesDown(piece: this));
-    moves.addAll(movesRight(piece: this));
-    moves.addAll(movesLeft(piece: this));
+    moves.addAll(movesUp());
+    moves.addAll(movesDown());
+    moves.addAll(movesRight());
+    moves.addAll(movesLeft());
+    moves.addAll(movesNorthEast());
+    moves.addAll(movesNorthWest());
+    moves.addAll(movesSouthWest());
+    moves.addAll(movesSouthEast());
     return moves;
   }
 
-  movesUp({Piece piece}) {
+  movesUp() {
     List<Move> movesUpMoves = [];
     var movesUpMovement = position.sum(coordinate: Coordinate(col: 0, row: -1));
     if (board.isValidPosition(position: movesUpMovement)) {
@@ -50,15 +54,20 @@ class King extends Piece {
           board.pieceAtPosition(position: movesUpMovement)?.side != this.side) {
         movesUpMoves.add(Move(
             newPosition: movesUpMovement,
-            piece: piece,
+            piece: this,
             pieceToCapture: board.pieceAtPosition(position: movesUpMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesUpMovement) == null){
+            movesUpMoves.add(Move(
+            newPosition: movesUpMovement,
+            piece: this,
             previousPosition: position));
       }
     }
     return movesUpMoves;
   }
 
-  movesDown({Piece piece}) {
+  movesDown() {
     List<Move> movesDownMoves = [];
     var movesDownMovement =
         position.sum(coordinate: Coordinate(col: 0, row: 1));
@@ -68,15 +77,20 @@ class King extends Piece {
               this.side) {
         movesDownMoves.add(Move(
             newPosition: movesDownMovement,
-            piece: piece,
+            piece: this,
             pieceToCapture: board.pieceAtPosition(position: movesDownMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesDownMovement) == null){
+            movesDownMoves.add(Move(
+            newPosition: movesDownMovement,
+            piece: this,
             previousPosition: position));
       }
     }
     return movesDownMoves;
   }
 
-  movesRight({Piece piece}) {
+  movesRight() {
     List<Move> movesRightMoves = [];
     var movesRightMovement =
         position.sum(coordinate: Coordinate(col: 1, row: 0));
@@ -86,15 +100,20 @@ class King extends Piece {
               this.side) {
         movesRightMoves.add(Move(
             newPosition: movesRightMovement,
-            piece: piece,
+            piece: this,
             pieceToCapture: board.pieceAtPosition(position: movesRightMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesRightMovement) == null){
+            movesRightMoves.add(Move(
+            newPosition: movesRightMovement,
+            piece: this,
             previousPosition: position));
       }
     }
     return movesRightMoves;
   }
 
-  movesLeft({Piece piece}) {
+  movesLeft() {
     List<Move> movesLeftMoves = [];
     var movesLeftMovement =
         position.sum(coordinate: Coordinate(col: -1, row: 0));
@@ -104,11 +123,109 @@ class King extends Piece {
               this.side) {
         movesLeftMoves.add(Move(
             newPosition: movesLeftMovement,
-            piece: piece,
+            piece: this,
             pieceToCapture: board.pieceAtPosition(position: movesLeftMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesLeftMovement) == null){
+            movesLeftMoves.add(Move(
+            newPosition: movesLeftMovement,
+            piece: this,
             previousPosition: position));
       }
     }
     return movesLeftMoves;
   }
+
+  movesNorthEast() {
+    List<Move> movesNorthEastMoves = [];
+    var movesNorthEastMovement =
+        position.sum(coordinate: Coordinate(col: 1, row: -1));
+    if (board.isValidPosition(position: movesNorthEastMovement)) {
+      if (board.pieceAtPosition(position: movesNorthEastMovement) != null &&
+          board.pieceAtPosition(position: movesNorthEastMovement)?.side !=
+              this.side) {
+        movesNorthEastMoves.add(Move(
+            newPosition: movesNorthEastMovement,
+            piece: this,
+            pieceToCapture: board.pieceAtPosition(position: movesNorthEastMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesNorthEastMovement) == null){
+            movesNorthEastMoves.add(Move(
+            newPosition: movesNorthEastMovement,
+            piece: this,
+            previousPosition: position));
+      }
+    }
+    return movesNorthEastMoves;
+  }
+
+    movesNorthWest() {
+    List<Move> movesNorthWestMoves = [];
+    var movesNorthWestMovement =
+        position.sum(coordinate: Coordinate(col: -1, row: -1));
+    if (board.isValidPosition(position: movesNorthWestMovement)) {
+      if (board.pieceAtPosition(position: movesNorthWestMovement) != null &&
+          board.pieceAtPosition(position: movesNorthWestMovement)?.side !=
+              this.side) {
+        movesNorthWestMoves.add(Move(
+            newPosition: movesNorthWestMovement,
+            piece: this,
+            pieceToCapture: board.pieceAtPosition(position: movesNorthWestMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesNorthWestMovement) == null){
+            movesNorthWestMoves.add(Move(
+            newPosition: movesNorthWestMovement,
+            piece: this,
+            previousPosition: position));
+      }
+    }
+    return movesNorthWestMoves;
+  }
+
+  movesSouthWest() {
+    List<Move> movesSouthWestMoves = [];
+    var movesSouthWestMovement =
+        position.sum(coordinate: Coordinate(col: -1, row: 1));
+    if (board.isValidPosition(position: movesSouthWestMovement)) {
+      if (board.pieceAtPosition(position:movesSouthWestMovement) != null &&
+          board.pieceAtPosition(position: movesSouthWestMovement)?.side !=
+              this.side) {
+        movesSouthWestMoves.add(Move(
+            newPosition: movesSouthWestMovement,
+            piece: this,
+            pieceToCapture: board.pieceAtPosition(position: movesSouthWestMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesSouthWestMovement) == null){
+            movesSouthWestMoves.add(Move(
+            newPosition: movesSouthWestMovement,
+            piece: this,
+            previousPosition: position));
+      }
+    }
+    return movesSouthWestMoves;
+  }
+
+    movesSouthEast() {
+    List<Move> movesSouthEastMoves = [];
+    var movesSouthEastMovement =
+        position.sum(coordinate: Coordinate(col: 1, row: 1));
+    if (board.isValidPosition(position: movesSouthEastMovement)) {
+      if (board.pieceAtPosition(position:movesSouthEastMovement) != null &&
+          board.pieceAtPosition(position: movesSouthEastMovement)?.side !=
+              this.side) {
+        movesSouthEastMoves.add(Move(
+            newPosition: movesSouthEastMovement,
+            piece: this,
+            pieceToCapture: board.pieceAtPosition(position: movesSouthEastMovement),
+            previousPosition: position));
+      }else if(board.pieceAtPosition(position: movesSouthEastMovement) == null){
+            movesSouthEastMoves.add(Move(
+            newPosition: movesSouthEastMovement,
+            piece: this,
+            previousPosition: position));
+      }
+    }
+    return movesSouthEastMoves;
+  }
+
 }

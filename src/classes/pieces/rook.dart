@@ -47,120 +47,17 @@ class Rook extends Piece {
   @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
-    moves.addAll(movesUp(piece: this));
-    moves.addAll(movesDown(piece: this));
-    moves.addAll(movesRight(piece: this));
-    moves.addAll(movesLeft(piece: this));
+    moves.addAll(movesUp());
+    moves.addAll(movesDown());
+    moves.addAll(movesRight());
+    moves.addAll(movesLeft());
     return moves;
   }
 
-  burstMovesUp({Piece piece}) {
-    List<Move> burstMovesUpMoves = [];
-    for (int i = 1; i < 15; i++) {
-      var movesUpMovement =
-          position.sum(coordinate: Coordinate(col: 0, row: -i));
-      if (board.isValidPosition(position: movesUpMovement)) {
-        if (board.pieceAtPosition(position: movesUpMovement) != null &&
-            board.pieceAtPosition(position: movesUpMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: movesUpMovement) != null &&
-            board.pieceAtPosition(position: movesUpMovement)?.side !=
-                this.side) {
-          burstMovesUpMoves.add(Move(
-              newPosition: movesUpMovement,
-              piece: piece,
-              pieceToCapture: board.pieceAtPosition(position: movesUpMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstMovesUpMoves;
-  }
-
-  burstMovesDown({Piece piece}) {
-    List<Move> burstMovesDownMoves = [];
-    for (int i = 1; i < 15; i++) {
-      var movesDownMovement =
-          position.sum(coordinate: Coordinate(col: 0, row: i));
-      if (board.isValidPosition(position: movesDownMovement)) {
-        if (board.pieceAtPosition(position: movesDownMovement) != null &&
-            board.pieceAtPosition(position: movesDownMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: movesDownMovement) != null &&
-            board.pieceAtPosition(position: movesDownMovement)?.side !=
-                this.side) {
-          burstMovesDownMoves.add(Move(
-              newPosition: movesDownMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: movesDownMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstMovesDownMoves;
-  }
-
-  burstMovesRight({Piece piece}) {
-    List<Move> burstMovesRightMoves = [];
-    for (int i = 1; i < 15; i++) {
-      var movesRightMovement =
-          position.sum(coordinate: Coordinate(col: i, row: 0));
-      if (board.isValidPosition(position: movesRightMovement)) {
-        if (board.pieceAtPosition(position: movesRightMovement) != null &&
-            board.pieceAtPosition(position: movesRightMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: movesRightMovement) != null &&
-            board.pieceAtPosition(position: movesRightMovement)?.side !=
-                this.side) {
-          burstMovesRightMoves.add(Move(
-              newPosition: movesRightMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: movesRightMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstMovesRightMoves;
-  }
-
-  burstMovesLeft({Piece piece}) {
-    List<Move> burstMovesLeftMoves = [];
-    for (int i = 1; i < 15; i++) {
-      var movesLeftMovement =
-          position.sum(coordinate: Coordinate(col: -i, row: 0));
-      if (board.isValidPosition(position: movesLeftMovement)) {
-        if (board.pieceAtPosition(position: movesLeftMovement) != null &&
-            board.pieceAtPosition(position: movesLeftMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: movesLeftMovement) != null &&
-            board.pieceAtPosition(position: movesLeftMovement)?.side !=
-                this.side) {
-          burstMovesLeftMoves.add(Move(
-              newPosition: movesLeftMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: movesLeftMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstMovesLeftMoves;
-  }
-
-  movesUp({Piece piece}) {
+  movesUp() {
     List<Move> movesUpMoves = [];
 
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesUpMovement =
           position.sum(coordinate: Coordinate(col: 0, row: -i));
       if (board.isValidPosition(position: movesUpMovement)) {
@@ -176,7 +73,7 @@ class Rook extends Piece {
                 this.side) {
           movesUpMoves.add(Move(
               newPosition: movesUpMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture: board.pieceAtPosition(position: movesUpMovement),
               previousPosition: position));
           break;
@@ -185,7 +82,7 @@ class Rook extends Piece {
         if (board.pieceAtPosition(position: movesUpMovement) == null) {
           movesUpMoves.add(Move(
               newPosition: movesUpMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
       }
@@ -193,9 +90,9 @@ class Rook extends Piece {
     return movesUpMoves;
   }
 
-  movesDown({Piece piece}) {
+  movesDown() {
     List<Move> movesDownMoves = [];
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesDownMovement =
           position.sum(coordinate: Coordinate(col: 0, row: i));
       if (board.isValidPosition(position: movesDownMovement)) {
@@ -211,7 +108,7 @@ class Rook extends Piece {
                 this.side) {
           movesDownMoves.add(Move(
               newPosition: movesDownMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: movesDownMovement),
               previousPosition: position));
@@ -221,7 +118,7 @@ class Rook extends Piece {
         if (board.pieceAtPosition(position: movesDownMovement) == null) {
           movesDownMoves.add(Move(
               newPosition: movesDownMovement,
-              piece: piece,
+              piece:this,
               previousPosition: position));
         }
       }
@@ -229,9 +126,9 @@ class Rook extends Piece {
     return movesDownMoves;
   }
 
-  movesRight({Piece piece}) {
+  movesRight() {
     List<Move> movesRightMoves = [];
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesRightMovement =
           position.sum(coordinate: Coordinate(col: i, row: 0));
       if (board.isValidPosition(position: movesRightMovement)) {
@@ -247,7 +144,7 @@ class Rook extends Piece {
                 this.side) {
           movesRightMoves.add(Move(
               newPosition: movesRightMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: movesRightMovement),
               previousPosition: position));
@@ -257,7 +154,7 @@ class Rook extends Piece {
         if (board.pieceAtPosition(position: movesRightMovement) == null) {
           movesRightMoves.add(Move(
               newPosition: movesRightMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
       }
@@ -265,9 +162,9 @@ class Rook extends Piece {
     return movesRightMoves;
   }
 
-  movesLeft({Piece piece}) {
+  movesLeft() {
     List<Move> movesLeftMoves = [];
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesLeftMovement =
           position.sum(coordinate: Coordinate(col: -i, row: 0));
       if (board.isValidPosition(position: movesLeftMovement)) {
@@ -283,7 +180,7 @@ class Rook extends Piece {
                 this.side) {
           movesLeftMoves.add(Move(
               newPosition: movesLeftMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: movesLeftMovement),
               previousPosition: position));
@@ -293,7 +190,7 @@ class Rook extends Piece {
         if (board.pieceAtPosition(position: movesLeftMovement) == null) {
           movesLeftMoves.add(Move(
               newPosition: movesLeftMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
       }

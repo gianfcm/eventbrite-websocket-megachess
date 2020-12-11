@@ -1,15 +1,142 @@
 import '../src/classes/pieces/queen.dart';
 import '../src/classes/board.dart';
-import '../src/classes/ai.dart';
 import '../src/classes/coordinate.dart';
-import '../src/shared/types/piece_color.dart';
 import 'package:test/test.dart';
+import '../src/shared/types/piece_color.dart';
 
 testQueen(){
-  print('testing queen moves');
+  print('testing queen');
   testMoveQueen(); 
-  //testCaptureMoveQueen();
-  //testCaptureMoveQueen2();
+  testMoves();
+  testCanMove();
+  testGetPossibleMoves();
+  testStringRep();
+}
+
+testStringRep(){
+    test('testStringRep Queen', () {
+
+    Queen queen = Queen(side: PIECE_COLOR.WHITE);
+    Queen queen2 = Queen(side: PIECE_COLOR.BLACK);
+
+    expect(queen.stringRep == '♕',true);
+    expect(queen2.stringRep == '♛', true);
+});
+}
+
+testGetPossibleMoves(){
+    test('testGetPossibleMoves Queen', () {
+      List<List<String>> matrixStringBoard =
+      [['r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
+        'r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
+        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
+        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        'q'' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
+        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
+        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
+        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
+    ]];
+
+    Board board = Board(
+        stringBoard:
+            matrixStringBoard.toString().replaceAll(RegExp(r'[^\w\s]+'), ''));
+
+    Queen queen = board.board[0][6];
+    Queen queen2 = board.board[5][0];
+
+    var possibleMoves = queen.getPossibleMoves();
+    var possibleMoves2 = queen2.getPossibleMoves();
+
+    expect(possibleMoves.length == 0,true);
+    expect(possibleMoves2.length == 31, true);
+});
+}
+
+testCanMove(){
+  test('testCanMove Queen ', () {
+      List<List<String>> matrixStringBoard =
+      [['r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
+        'r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
+        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
+        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
+        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
+        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
+        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
+    ]];
+
+    Board board = Board(
+        stringBoard:
+            matrixStringBoard.toString().replaceAll(RegExp(r'[^\w\s]+'), ''));
+
+    Queen queen = board.board[0][6];
+
+    var canMove = queen.canMove();
+    expect(canMove == false, true );
+});
+}
+
+testMoves(){
+    test('testMoves Queen ', () {
+      List<List<String>> matrixStringBoard =
+      [['r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
+        'r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
+        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
+        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        'q'' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
+        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
+        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
+        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
+    ]];
+
+    Board board = Board(
+        stringBoard:
+            matrixStringBoard.toString().replaceAll(RegExp(r'[^\w\s]+'), ''));
+
+    Queen queen = board.board[5][0];
+
+    var movesUp = queen.movesUp();
+    var movesDown = queen.movesDown();
+    var movesLeft = queen.movesLeft();
+    var movesRight = queen.movesRight();
+    var movesNorthWest = queen.northWestMoves();
+    var movesNorthEast = queen.northEastMoves();
+    var movesSouthWest = queen.southWestMoves();
+    var movesSouthEast = queen.southEastMoves();
+
+    expect(movesUp.length == 1, true);
+    expect(movesDown.length == 7, true);
+    expect(movesLeft.length == 0, true);
+    expect(movesRight.length == 15, true);
+    expect(movesNorthWest.length == 0,true);
+    expect(movesNorthEast.length == 1,true);
+    expect(movesSouthWest.length == 0,true);
+    expect(movesSouthEast.length == 7,true);
+});
 }
 
 testMoveQueen() {
@@ -87,7 +214,6 @@ testMoveQueen() {
     expect(moves3.length == 1, true );
     expect(moves3[0].newPosition.row == 0 && moves3[0].newPosition.col==6 ,true);    
 
-    print('Verifying moves positions');
     for (var move in moves) {
       expect(
           correctPositions.any((e) =>
@@ -95,47 +221,4 @@ testMoveQueen() {
           true);
     }
   });
-}
-
-
-testCaptureMoveQueen2() {
-  test('best move for a queen', () {
-    List<List<String>> matrixStringBoard =
-      [['r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
-        'r''r''h''h''b''b''q''q''k''k''b''b''h''h''r''r'
-        'p''p''p''p''p''p''p''p''p''p''p''p''p''p''p''p'
-        'p''p''p''p''p''p'' ''p''p''p''p''p''p''p''p''p'
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' ''p'' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' ''Q'' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
-        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
-        'P''P''P''P''P''P''P''P''P''P''P''P''P''P''P''P'
-        'R''R''H''H''B''B''Q''Q''K''K''B''B''H''H''R''R'
-        'R''R''H''H''B''B'' ''Q''K''K''B''B''H''H''R''R'
-    ]];
-
-    var bestPosition = [
-      Coordinate(row: 5, col: 6),
-    ];
-
-    Board board = Board(
-        stringBoard:
-            matrixStringBoard.toString().replaceAll(RegExp(r'[^\w\s]+'), ''));
-    Queen queen = board.board[8][6];
-
-    AI ai = AI(board: board,side: PIECE_COLOR.WHITE);
-
-    var bestMove = ai.makeBestMove();
-      print('bestMove ${bestMove.newPosition.row} ${bestMove.newPosition.col}');
-      expect(
-          bestPosition.any((e) =>
-              e.row == bestMove.newPosition.row && e.col == bestMove.newPosition.col),
-          true);
-    }
-    );
 }

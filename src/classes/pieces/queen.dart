@@ -199,7 +199,7 @@ class Queen extends Piece {
   movesUp({Piece piece}) {
     List<Move> movesUpMoves = [];
 
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesUpMovement =
           position.sum(coordinate: Coordinate(col: 0, row: -i));
       if (board.isValidPosition(position: movesUpMovement)) {
@@ -234,7 +234,7 @@ class Queen extends Piece {
 
   movesDown({Piece piece}) {
     List<Move> movesDownMoves = [];
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesDownMovement =
           position.sum(coordinate: Coordinate(col: 0, row: i));
       if (board.isValidPosition(position: movesDownMovement)) {
@@ -270,7 +270,7 @@ class Queen extends Piece {
 
   movesRight({Piece piece}) {
     List<Move> movesRightMoves = [];
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesRightMovement =
           position.sum(coordinate: Coordinate(col: i, row: 0));
       if (board.isValidPosition(position: movesRightMovement)) {
@@ -306,7 +306,7 @@ class Queen extends Piece {
 
   movesLeft({Piece piece}) {
     List<Move> movesLeftMoves = [];
-    for (int i = 1; i < 15; i++) {
+    for (int i = 1; i <= 15; i++) {
       var movesLeftMovement =
           position.sum(coordinate: Coordinate(col: -i, row: 0));
       if (board.isValidPosition(position: movesLeftMovement)) {

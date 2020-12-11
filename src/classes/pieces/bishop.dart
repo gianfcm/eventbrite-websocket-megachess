@@ -48,122 +48,14 @@ class Bishop extends Piece {
   @override
   List<Move> getPossibleMoves() {
     List<Move> moves = [];
-    moves.addAll(northWestMoves(piece: this));
-    moves.addAll(northEastMoves(piece: this));
-    moves.addAll(southWestMoves(piece: this));
-    moves.addAll(southEastMoves(piece: this));
+    moves.addAll(northWestMoves());
+    moves.addAll(northEastMoves());
+    moves.addAll(southWestMoves());
+    moves.addAll(southEastMoves());
     return moves;
   }
 
-  burstNorthWestMoves({Piece piece}) {
-    List<Move> burstNorthWestMoves = [];
-
-    for (int i = 1; i <= 15; i++) {
-      var northWestMovement =
-          position.sum(coordinate: Coordinate(col: -i, row: -i));
-      if (board.isValidPosition(position: northWestMovement)) {
-        if (board.pieceAtPosition(position: northWestMovement) != null &&
-            board.pieceAtPosition(position: northWestMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: northWestMovement) != null &&
-            board.pieceAtPosition(position: northWestMovement)?.side !=
-                this.side) {
-          burstNorthWestMoves.add(Move(
-              newPosition: northWestMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: northWestMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstNorthWestMoves;
-  }
-
-  burstNorthEastMoves({Piece piece}) {
-    List<Move> burstNorthEastMoves = [];
-
-    for (int i = 1; i <= 15; i++) {
-      var northEastMovement =
-          position.sum(coordinate: Coordinate(col: i, row: -i));
-      if (board.isValidPosition(position: northEastMovement)) {
-        if (board.pieceAtPosition(position: northEastMovement) != null &&
-            board.pieceAtPosition(position: northEastMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: northEastMovement) != null &&
-            board.pieceAtPosition(position: northEastMovement)?.side !=
-                this.side) {
-          burstNorthEastMoves.add(Move(
-              newPosition: northEastMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: northEastMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstNorthEastMoves;
-  }
-
-  burstSouthWestMoves({Piece piece}) {
-    List<Move> burstSouthWestMoves = [];
-
-    for (int i = 1; i <= 15; i++) {
-      var southWestMovement =
-          position.sum(coordinate: Coordinate(col: -i, row: i));
-      if (board.isValidPosition(position: southWestMovement)) {
-        if (board.pieceAtPosition(position: southWestMovement) != null &&
-            board.pieceAtPosition(position: southWestMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: southWestMovement) != null &&
-            board.pieceAtPosition(position: southWestMovement)?.side !=
-                this.side) {
-          burstSouthWestMoves.add(Move(
-              newPosition: southWestMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: southWestMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstSouthWestMoves;
-  }
-
-  burstSouthEastMoves({Piece piece}) {
-    List<Move> burstSouthEastMoves = [];
-
-    for (int i = 1; i <= 15; i++) {
-      var southEastMovement =
-          position.sum(coordinate: Coordinate(col: i, row: i));
-      if (board.isValidPosition(position: southEastMovement)) {
-        if (board.pieceAtPosition(position: southEastMovement) != null &&
-            board.pieceAtPosition(position: southEastMovement)?.side == side) {
-          break;
-        }
-        if (board.pieceAtPosition(position: southEastMovement) != null &&
-            board.pieceAtPosition(position: southEastMovement)?.side !=
-                this.side) {
-          burstSouthEastMoves.add(Move(
-              newPosition: southEastMovement,
-              piece: piece,
-              pieceToCapture:
-                  board.pieceAtPosition(position: southEastMovement),
-              previousPosition: position));
-          break;
-        }
-      }
-    }
-    return burstSouthEastMoves;
-  }
-
-  northWestMoves({Piece piece}) {
+  northWestMoves() {
     List<Move> northWestMoves = [];
 
     for (int i = 1; i <= 15; i++) {
@@ -183,7 +75,7 @@ class Bishop extends Piece {
                 this.side) {
           northWestMoves.add(Move(
               newPosition: northWestMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: northWestMovement),
               previousPosition: position));
@@ -193,7 +85,7 @@ class Bishop extends Piece {
         if (board.pieceAtPosition(position: northWestMovement) == null) {
           northWestMoves.add(Move(
               newPosition: northWestMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
       }
@@ -201,7 +93,7 @@ class Bishop extends Piece {
     return northWestMoves;
   }
 
-  northEastMoves({Piece piece}) {
+  northEastMoves() {
     List<Move> northEastMoves = [];
 
     for (int i = 1; i <= 15; i++) {
@@ -220,7 +112,7 @@ class Bishop extends Piece {
                 this.side) {
           northEastMoves.add(Move(
               newPosition: northEastMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: northEastMovement),
               previousPosition: position));
@@ -230,7 +122,7 @@ class Bishop extends Piece {
         if (board.pieceAtPosition(position: northEastMovement) == null) {
           northEastMoves.add(Move(
               newPosition: northEastMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
       }
@@ -238,7 +130,7 @@ class Bishop extends Piece {
     return northEastMoves;
   }
 
-  southWestMoves({Piece piece}) {
+  southWestMoves() {
     List<Move> southWestMoves = [];
 
     for (int i = 1; i <= 15; i++) {
@@ -256,7 +148,7 @@ class Bishop extends Piece {
                 this.side) {
           southWestMoves.add(Move(
               newPosition: southWestMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: southWestMovement),
               previousPosition: position));
@@ -266,7 +158,7 @@ class Bishop extends Piece {
         if (board.pieceAtPosition(position: southWestMovement) == null) {
           southWestMoves.add(Move(
               newPosition: southWestMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
         //camino 2 tiene pieza contrincante
@@ -275,7 +167,7 @@ class Bishop extends Piece {
     return southWestMoves;
   }
 
-  southEastMoves({Piece piece}) {
+  southEastMoves() {
     List<Move> southEastMoves = [];
 
     for (int i = 1; i <= 15; i++) {
@@ -294,7 +186,7 @@ class Bishop extends Piece {
                 this.side) {
           southEastMoves.add(Move(
               newPosition: southEastMovement,
-              piece: piece,
+              piece: this,
               pieceToCapture:
                   board.pieceAtPosition(position: southEastMovement),
               previousPosition: position));
@@ -304,7 +196,7 @@ class Bishop extends Piece {
         if (board.pieceAtPosition(position: southEastMovement) == null) {
           southEastMoves.add(Move(
               newPosition: southEastMovement,
-              piece: piece,
+              piece: this,
               previousPosition: position));
         }
       }
