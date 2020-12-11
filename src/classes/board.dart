@@ -69,6 +69,8 @@ class Board {
   }
 
   unMakeMove({Move move}) {
+    this.board[move.newPosition.row][move.newPosition.col] =
+          EmptyPiece(board: this, position: move.newPosition, side: null);
     if (move.pieceToCapture != null) {
       this.board[move.newPosition.row][move.newPosition.col] =
           move.pieceToCapture;
