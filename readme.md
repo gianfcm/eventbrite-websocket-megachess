@@ -16,7 +16,7 @@ dev_dependencies:
   test: ^1.15.6
 ```
 
-for download the packages run the following command :
+For download the packages run the following command :
 ```
 dart pub get
 ```
