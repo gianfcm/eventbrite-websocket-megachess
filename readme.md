@@ -23,6 +23,14 @@ dart pub get
 
 ## How to start
 
+If you want to challenge a player you need to specify the name on the following file :
+
+```
+src/classes/websocket/chess_socket.dart
+  in the start() method
+    e.g challege_player(player:'player1');
+```
+
 For play you need to run the following command with your authToken :
 
 ```
