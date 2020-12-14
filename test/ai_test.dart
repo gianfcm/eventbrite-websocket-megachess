@@ -8,6 +8,7 @@ import '../src/shared/types/piece_color.dart';
 import '../src/classes/pieces/queen.dart';
 import '../src/classes/pieces/king.dart';
 import '../src/classes/pieces/bishop.dart';
+import '../src/classes/pieces/horse.dart';
 import '../src/classes/pieces/rook.dart';
 
 testAI(){
@@ -149,8 +150,8 @@ testFilterCaptureMoves(){
       [[' ''r''h'' ''b''b''q''q''k''k''b''b''h''h''r''r'
         ' '' '' '' ''Q'' ''q''q''k''k''b''b''h''h''r''r'
         ' '' '' '' '' '' ''p''p'' '' ''p''p''p''p''p''p'
-        ' '' '' '' '' '' '' '' '' '' ''p'' ''p''p''p''p'
-        ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
+        ' '' '' '' '' '' ''B'' '' ''H''p'' ''p''p''p''p'
+        ' '' '' '' '' '' '' '' '' '' '' '' '' ''R'' '' '
         ' ''Q'' '' '' '' '' '' '' ''q'' '' '' '' '' '' '
         ' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '' '
         ' '' '' '' ''p'' '' '' '' '' ''q'' '' '' '' '' '
@@ -177,6 +178,15 @@ testFilterCaptureMoves(){
 
     var captureQueenMoves = ai.captureQueen(
                             moves: board.getBestMoves(side: PIECE_COLOR.BLACK));
+    
+    var captureRookMoves = ai.captureRook(
+                            moves: board.getBestMoves(side: PIECE_COLOR.BLACK));
+
+    var captureBishopMoves = ai.captureBishop(
+                            moves: board.getBestMoves(side: PIECE_COLOR.BLACK));   
+
+    var captureHorseMoves = ai.captureHorse(
+                            moves: board.getBestMoves(side: PIECE_COLOR.BLACK));   
 
     var defendBaseMoves = ai.defendBase(
                             moves: board.getBestMoves(side: PIECE_COLOR.BLACK));
@@ -187,7 +197,6 @@ testFilterCaptureMoves(){
     var filterPawnCaptureMoves = ai.filterPawnCaptureMoves(
                             moves: board.getBestMoves(side: PIECE_COLOR.BLACK));
 
- 
     
     for(var move in filterPawnCaptureMoves){
       expect((move.pieceToCapture.position.row != null && move.piece is Pawn), true);
@@ -198,7 +207,7 @@ testFilterCaptureMoves(){
     }
 
     for(var move in defendBaseMoves){
-      expect(move.pieceToCapture is Queen, true);
+      expect(move.pieceToCapture.position.row <= 4, true);
     }
     
     for(var move in captureKingMoves){
@@ -208,7 +217,20 @@ testFilterCaptureMoves(){
     for(var move in captureQueenMoves){
       expect(move.pieceToCapture is Queen,true);
     }
+
+    for(var move in captureRookMoves){
+      expect(move.pieceToCapture is Rook,true);
     }
+
+    for(var move in captureHorseMoves){
+      expect(move.pieceToCapture is Horse,true);
+    }
+
+    for(var move in captureBishopMoves){
+      expect(move.pieceToCapture is Bishop,true);
+    }
+    }
+
   );
 }
 
@@ -248,7 +270,7 @@ testFilterCaptureMovesWhite(){
 
     var filteredMoves = ai.filterCaptureMoves(
                             board: board,
-                            depth: 4,
+                            depth: 2,
                             moves: board.getBestMoves(
                                     side: PIECE_COLOR.WHITE));
 

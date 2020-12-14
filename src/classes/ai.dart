@@ -3,6 +3,7 @@ import '../shared/types/piece_color.dart';
 import 'board.dart';
 import 'move.dart';
 import 'pieces/bishop.dart';
+import 'pieces/horse.dart';
 import 'pieces/king.dart';
 import 'pieces/pawn.dart';
 import 'pieces/queen.dart';
@@ -12,7 +13,7 @@ class AI {
   Board board;
   Move bestMove;
   PIECE_COLOR side;
-  int SEARCH_DEPTH = 4;
+  int SEARCH_DEPTH = 2;
 
   AI({this.board, this.side});
 
@@ -121,6 +122,12 @@ class AI {
 
     filterCaptureMoves.addAll(captureQueen(moves: moves));
 
+    filterCaptureMoves.addAll(captureRook(moves: moves));
+
+    filterCaptureMoves.addAll(captureBishop(moves:moves));
+
+    filterCaptureMoves.addAll(captureHorse(moves: moves));
+
     return filterCaptureMoves.isNotEmpty
         ? filterCaptureMoves
         : filterPawnCaptureMoves(moves: moves);
@@ -144,6 +151,36 @@ class AI {
       }
     }
     return captureQueenMoves;
+  }
+
+  List<Move> captureRook({List<Move> moves}) {
+    List<Move> captureRookMoves = [];
+    for (var move in moves) {
+      if (move?.pieceToCapture is Rook) {
+        captureRookMoves.add(move);
+      }
+    }
+    return captureRookMoves;
+  }
+
+  List<Move> captureHorse({List<Move> moves}) {
+    List<Move> captureHorseMoves = [];
+    for (var move in moves) {
+      if (move?.pieceToCapture is Horse) {
+        captureHorseMoves.add(move);
+      }
+    }
+    return captureHorseMoves;
+  }
+
+  List<Move> captureBishop({List<Move> moves}) {
+    List<Move> captureBishopMoves = [];
+    for (var move in moves) {
+      if (move?.pieceToCapture is Bishop) {
+        captureBishopMoves.add(move);
+      }
+    }
+    return captureBishopMoves;
   }
 
   List<Move> defendBase({List<Move> moves}) {

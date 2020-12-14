@@ -20,6 +20,7 @@ class ChessSocket {
       print(message);
       read_message_from_server(message: message);
     });
+    challenge_player(player: '');
   }
 
   read_message_from_server({dynamic message}) {
